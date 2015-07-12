@@ -1,0 +1,47 @@
+{
+  "name": "datwrapper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "url": "git://github.com/flatsheet/datwrapper.git"
+  },
+  "dependencies": {
+    "JSONStream": "^1.0.4",
+    "body": "^5.0.0",
+    "clone": "^1.0.2",
+    "cuid": "^1.2.5",
+    "dat-core": "^3.0.4",
+    "data-schema": "^1.4.1",
+    "each-async": "^1.1.1",
+    "extend": "^2.0.1",
+    "filter-object": "^1.1.2",
+    "is-cuid": "^1.0.0",
+    "is-my-json-valid": "^2.12.0",
+    "isarray": "0.0.1",
+    "json-format-stream": "^1.1.0",
+    "level": "^1.1.0",
+    "match-routes": "^2.0.0",
+    "pump": "^1.0.0",
+    "qs": "^3.1.0",
+    "request": "^2.58.0",
+    "response": "git://github.com/mikeal/response.git",
+    "standard": "^4.3.1",
+    "subleveldown": "^2.0.0",
+    "through2": "^2.0.0",
+    "type-of": "^2.0.1"
+  },
+  "devDependencies": {
+    "debug": "^2.2.0",
+    "hammock": "^1.0.2",
+    "memdb": "^1.0.1",
+    "tap-spec": "^4.0.0",
+    "tape": "^4.0.0"
+  },
+  "scripts": {
+    "test": "tape tests/*.js | tap-spec",
+    "test-server": "node tests/helpers/server.js"
+  },
+  "author": "",
+  "license": "MIT"
+}
