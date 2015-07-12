@@ -1,16 +1,18 @@
-# dat-wrapper
+# datwrapper
 
 Manage a bunch of datasets via JS or API with versioning, dynamic schemas, and that are compatible & replicable with [Dat](http://dat-data.com) instances. Built for use in [flatsheet](http://github.com/flatsheet/flatsheet).
+
+[![Build Status](https://travis-ci.org/flatsheet/datwrapper.svg)](https://travis-ci.org/flatsheet/datwrapper)
 
 ## Install
 
 ```
-npm install --save sethvincent/dat-wrapper
+npm install --save datwrapper
 ```
 
 ## Overview
 
-The dat-wrapper router provides these routes:
+The datwrapper router provides these routes:
 
 ```
 GET /data
@@ -39,7 +41,7 @@ DELETE /data/:key/schema/:schemakey
 ### Create a server to expose the API endpoints:
 
 ```
-var createDataServer = require('dat-wrapper')
+var createDataServer = require('datwrapper')
 var level = require('level')
 var http = require('http')
 
@@ -55,7 +57,7 @@ var server = http.createServer(function (req, res) {
 
 ```
 var level = require('level')
-var dataWrapper = require('dat-wrapper/model')
+var dataWrapper = require('datwrapper/model')
 var db = level('db')
 var data = dataWrapper(db)
 ```
