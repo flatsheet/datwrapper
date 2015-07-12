@@ -1,6 +1,6 @@
 {
   "name": "datwrapper",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "repository": {
@@ -25,7 +25,7 @@
     "pump": "^1.0.0",
     "qs": "^3.1.0",
     "request": "^2.58.0",
-    "response": "git://github.com/mikeal/response.git",
+    "response": "git://github.com/sethvincent/response.git",
     "standard": "^4.3.1",
     "subleveldown": "^2.0.0",
     "through2": "^2.0.0",

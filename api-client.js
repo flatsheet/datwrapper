@@ -14,7 +14,7 @@ function DatWrapperClient (options) {
   }
 
   this.host = options.host || 'http://127.0.0.1:4243'
-  this.prefix = options.prefix || '/data'
+  this.prefix = options.prefix || '/api/v1/data'
   this.rows = Rows(this)
   this.schema = Schema(this)
 }
