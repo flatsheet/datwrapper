@@ -149,7 +149,6 @@ DatWrapper.prototype._put = function (key, data, callback) {
 DatWrapper.prototype._putMetadata = function (key, data, callback) {
   var self = this
   this.metadata.get(key, function (err, existing) {
-    if (err) return callback(err)
     if (existing) data = extend(existing, data)
     data = filterObj(data, ['*', '!rows', '!createIfMissing'])
     self.metadata.put(key, data, function (err) {
