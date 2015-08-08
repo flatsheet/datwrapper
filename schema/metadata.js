@@ -1,6 +1,6 @@
 module.exports = {
-  title: "datwrapper",
-  type: "object",
+  title: 'datwrapper',
+  type: 'object',
   properties: {
     title: {
       type: 'string',
@@ -24,5 +24,5 @@ module.exports = {
     updated: {
       type: ['string', 'null']
     }
-  }  
+  }
 }

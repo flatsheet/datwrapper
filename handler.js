@@ -1,10 +1,6 @@
-var qs = require('querystring')
 var response = require('response')
 var JSONStream = require('JSONStream')
 var parseBody = require('body/json')
-var through = require('through2')
-var filter = require('filter-object')
-var extend = require('extend')
 var pump = require('pump')
 
 module.exports = function (datwrappers, params) {
@@ -172,7 +168,6 @@ module.exports = function (datwrappers, params) {
 
     if (req.method === 'DELETE') {
       openDatWrapper({ key: options.params.key }, function (err, datwrapper, metadata) {
-        var prop = datwrapper.rowSchema.delete(options.params.schemakey)
         if (err) response().json({ error: err }).status(400).pipe(res)
         response().json({ message: 'deleted' }).status(200).pipe(res)
       })

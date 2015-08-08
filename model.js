@@ -1,4 +1,3 @@
-var Emitter = require('events').EventEmitter
 var validator = require('is-my-json-valid')
 var format = require('json-format-stream')
 var filterObj = require('filter-object')
@@ -7,10 +6,8 @@ var sublevel = require('subleveldown')
 var through = require('through2')
 var extend = require('extend')
 var each = require('each-async')
-var isarray = require('isarray')
 var dat = require('dat-core')
 var clone = require('clone')
-var isCuid = require('is-cuid')
 var cuid = require('cuid')
 
 var debug = require('debug')('datwrapper-model')
@@ -19,7 +16,7 @@ module.exports = Dats
 
 function Dats (db, options) {
   if (!(this instanceof Dats)) return new Dats(db, options)
-  var options = options || {}
+  options = options || {}
   this._db = db
   this.metadata = sublevel(db, 'dats-metadata', { valueEncoding: 'json' })
   this.authorize = options.authorize || function (permission, done) { done(null, true) }
@@ -52,7 +49,7 @@ Dats.prototype.get = function (key, callback) {
   })
 }
 
-Dats.prototype.list = 
+Dats.prototype.list =
 Dats.prototype.createReadStream = function (options) {
   var self = this
   options = extend({ keys: true, values: false }, options)
@@ -60,6 +57,7 @@ Dats.prototype.createReadStream = function (options) {
   function map (key, enc, next) {
     var stream = this
     self.get(key, function (err, data) {
+      if (err) return next(err)
       stream.push(data)
       next()
     })
@@ -151,6 +149,7 @@ DatWrapper.prototype._put = function (key, data, callback) {
 DatWrapper.prototype._putMetadata = function (key, data, callback) {
   var self = this
   this.metadata.get(key, function (err, existing) {
+    if (err) return callback(err)
     if (existing) data = extend(existing, data)
     data = filterObj(data, ['*', '!rows', '!createIfMissing'])
     self.metadata.put(key, data, function (err) {
@@ -209,7 +208,7 @@ DatWrapper.prototype.delete = function (callback) {
 
     /*
     // deleting all the rows takes forever:
-    
+
     this.rows.createReadStream()
       .pipe(through.obj(function (chunk, enc, next) {
         self.delete(chunk, function () {
@@ -265,7 +264,6 @@ Rows.prototype.put = function (key, data, options, callback) {
 Rows.prototype._put = function (key, data, options, callback) {
   var self = this
   data = self.schema.format(data)
-  var properties = self.schema.all()
 
   this.datwrapper.updateSchema(function () {
     if (self.schema.validate(data)) {
@@ -338,7 +336,7 @@ Rows.prototype.delete = function (key, data, callback) {
   var self = this
   this.authorize(auth('delete', this.datwrapper.key), function (authErr, ok) {
     if (authErr || !ok) return callback(new Error('Not Authorized'))
-    self.dat.del(key, cb)
+    self.dat.del(key, callback)
   })
 }
 
@@ -348,16 +346,15 @@ Rows.prototype.createReadStream = function (options) {
   var self = this
   var stream = this.dat.createReadStream(options)
   if (options.names) {
-    function iterate (chunk, enc, next) {
+    return stream.pipe(through.obj(function (chunk, enc, next) {
       chunk.value = self.schema.map('name', chunk.value)
       this.push(chunk)
       next()
-    }
-    return stream.pipe(through.obj(iterate))
+    }))
   }
   return stream
 }
 
-function auth(action, key) {
+function auth (action, key) {
   return { dats: { action: action, key: key } }
 }

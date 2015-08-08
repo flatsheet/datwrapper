@@ -1,6 +1,5 @@
 var qs = require('querystring')
 var request = require('request')
-var dataSchema = require('data-schema')
 
 module.exports = DatWrapperClient
 
@@ -30,9 +29,7 @@ DatWrapperClient.prototype.request = function (method, path, params, cb) {
   if (method === 'get') {
     params = qs.stringify(params)
     options.uri = this.fullUrl(path, params)
-  }
-
-  else {
+  } else {
     options.uri = this.fullUrl(path)
     options.body = params
   }
@@ -55,7 +52,7 @@ DatWrapperClient.prototype.request = function (method, path, params, cb) {
       if (response.statusCode >= 400) return cb({ error: { status: response.statusCode } })
       return cb(null, body)
     }
-  }  
+  }
 }
 
 DatWrapperClient.prototype.get = function (key, options, cb) {
@@ -106,7 +103,7 @@ Rows.prototype.update = function (key, data, cb) {
   return this.client.request('put', '/' + key + '/rows/' + data.key, data.value, cb)
 }
 
-Rows.prototype.delete = function (key, cb) {
+Rows.prototype.delete = function (key, rowkey, cb) {
   return this.client.request('delete', '/' + key + '/rows/' + rowkey, cb)
 }
 
