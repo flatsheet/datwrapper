@@ -11,7 +11,7 @@
     "body": "^5.0.0",
     "clone": "^1.0.2",
     "cuid": "^1.2.5",
-    "dat-core": "^3.0.4",
+    "dat-core": "^4.0.5",
     "data-schema": "^1.4.1",
     "each-async": "^1.1.1",
     "extend": "^2.0.1",
