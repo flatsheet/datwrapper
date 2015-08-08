@@ -6,15 +6,14 @@ module.exports = function (options) {
     var handler = require('./handler')(model, options)
     var router = require('./router')(handler, options)
 
-    return {
-      name: 'data',
-      model: model,
-      schema: require('./schema/metadata'),
-      handler: handler,
-      router: router,
-      serve: function (req, res) {
-        return router.match(req, res)
-      }
+    model.name = 'datwrapper'
+    model.handler = handler
+    model.router = router
+    model.schema = require('./schema/metadata')
+    model.serve = function (req, res) {
+      return router.match(req, res)
     }
+
+    return model
   }
 }
